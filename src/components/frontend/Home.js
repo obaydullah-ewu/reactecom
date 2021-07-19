@@ -7,8 +7,6 @@ function Home() {
             <Navbar />
             <h1>I am Home Page</h1>
         </div>
-
-
     );
 }
 
