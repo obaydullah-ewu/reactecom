@@ -5,6 +5,8 @@ import swal from "sweetalert";
 
 function AddProduct()
 {
+    document.title = "Add Product";
+
     const [categoryList, setCategoryList] = useState([]);
     const [productInput, setProduct] = useState({
         category_id: '',
@@ -39,12 +41,12 @@ function AddProduct()
     };
 
     useEffect(() => {
-       axios.get('/api/all-category').then(res => {
+        axios.get('/api/all-category').then(res => {
             if (res.data.status === 200)
             {
                 setCategoryList(res.data.category);
             }
-       });
+        });
     }, []);
 
     const submitProduct = (e) => {

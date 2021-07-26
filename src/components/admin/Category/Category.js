@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 
 function Category()
 {
+    document.title = "Add Category";
+
     const [categoryInput, setCategory] = useState({
        slug: '',
        name: '',

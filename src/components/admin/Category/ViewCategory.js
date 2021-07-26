@@ -4,6 +4,8 @@ import axios from "axios";
 import swal from "sweetalert";
 
 function ViewCategory() {
+    document.title = "View Category";
+
     const [loading, setLoading] = useState(true);
     const [categoryList, setCategoryList] = useState([]);
     useEffect(() => {
