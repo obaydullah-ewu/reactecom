@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import swal from "sweetalert";
 
 function ViewCategory() {
     const [loading, setLoading] = useState(true);
@@ -16,6 +17,26 @@ function ViewCategory() {
         });
     }, []);
 
+    const deleteCategory = (e, id) => {
+        e.preventDefault();
+
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Deleting..."
+
+        axios.delete(`/api/delete-category/${id}`).then(res => {
+            if (res.data.status === 200)
+            {
+                swal("Success", res.data.message, 'success');
+                thisClicked.closest("tr").remove();
+            }else if(res.data.status === 404)
+            {
+                swal("Success", res.data.message, 'success');
+                thisClicked.innerText = "Delete"
+
+            }
+        })
+    }
+
     var viewcategory_HTMLTABLE = "";
 
     if (loading)
@@ -30,8 +51,8 @@ function ViewCategory() {
                         <td>{item.name}</td>
                         <td>{item.slug}</td>
                         <td>{item.status}</td>
-                        <td><Link to={`/edit-category/${item.id}`} className="btn btn-success btn-sm"> Edit </Link></td>
-                        <td><button to={`/delete-category/${item.id}`} className="btn btn-danger btn-sm"> Delete </button></td>
+                        <td><Link to={`/admin/edit-category/${item.id}`} className="btn btn-success btn-sm"> Edit </Link></td>
+                        <td><button type="button" onClick={ (e) => deleteCategory(e, item.id) } className="btn btn-danger btn-sm"> Delete </button></td>
                     </tr>
                 )
             });
@@ -39,7 +60,7 @@ function ViewCategory() {
 
     return (
         <div className="container px-4">
-            <div className="card">
+            <div className="card mt-4">
                 <div className="card-header">
                     <h4>Category List
                         <Link to="/admin/add-category" className="btn btn-primary btn-sm float-end">Add Category</Link>
