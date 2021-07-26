@@ -38,7 +38,16 @@ function Category()
             if (res.data.status === 200)
             {
                 swal('Success', res.data.message, 'success');
-                document.getElementById('CATEGORY_FORM').reset();
+                setCategory({...categoryInput,
+                    slug: '',
+                    name: '',
+                    descrip: '',
+                    status: '',
+                    meta_title: '',
+                    meta_keyword: '',
+                    meta_descrip: '',
+                    error_list: [],
+                });
             }else if (res.data.status === 400){
                 setCategory({...categoryInput, error_list:res.data.errors})
             }

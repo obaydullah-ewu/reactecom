@@ -37,13 +37,13 @@ function ViewCategory() {
         })
     }
 
-    var viewcategory_HTMLTABLE = "";
+    var viewCategory_HTMLTABLE = "";
 
     if (loading)
     {
         return <h4>Loading Category...</h4>
     }else {
-        viewcategory_HTMLTABLE =
+        viewCategory_HTMLTABLE =
             categoryList.map((item) => {
                 return (
                     <tr key={item.id}>
@@ -79,7 +79,7 @@ function ViewCategory() {
                             </tr>
                         </thead>
                         <tbody>
-                        {viewcategory_HTMLTABLE}
+                        {viewCategory_HTMLTABLE}
                         </tbody>
                     </table>
                 </div>
