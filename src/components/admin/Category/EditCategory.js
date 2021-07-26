@@ -5,6 +5,7 @@ import swal from "sweetalert";
 
 function EditCategory(props)
 {
+    document.title = "Edit Category";
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [categoryInput, setCategory] = useState([]);
@@ -16,6 +17,7 @@ function EditCategory(props)
             if (res.data.status === 200)
             {
                 setCategory(res.data.category);
+                setCheckboxes(res.data.category);
             }else if(res.data.status === 404)
             {
                 swal('error', res.data.message, 'error');
@@ -30,10 +32,25 @@ function EditCategory(props)
         setCategory({...categoryInput, [e.target.name]:e.target.value });
     }
 
+    const [allCheckbox,setCheckboxes] = useState([]);
+    const handleCheckbox = (e) => {
+        e.persist();
+        setCheckboxes({ ...allCheckbox, [e.target.name]: e.target.checked });
+    }
+
     const updateCategory = (e) => {
         e.preventDefault();
         const category_id = props.match.params.id;
-        const data = categoryInput;
+        // const data = categoryInput;
+        const data = {
+            slug: categoryInput.slug,
+            name: categoryInput.name,
+            description: categoryInput.description,
+            status: allCheckbox.status ? '1':'0',
+            meta_title: categoryInput.meta_title,
+            meta_keyword: categoryInput.meta_keyword,
+            meta_description: categoryInput.meta_description,
+        }
         axios.put(`/api/update-category/${category_id}`, data).then(res => {
             if (res.data.status === 200)
             {
@@ -100,7 +117,7 @@ function EditCategory(props)
                              </div>
                              <div className="form-group mb-3">
                                  <label htmlFor="">Status</label>
-                                 <input type="checkbox" name="status" onChange={handleInput} value={categoryInput.status} /> Status 0-show/1-hidden
+                                 <input type="checkbox" name="status" onChange={handleCheckbox} defaultChecked={allCheckbox.status === 1 ? true:false} /> Status 0-show/1-hidden
                              </div>
                          </div>
                          <div className="tab-pane card-body border fade" id="seo-tags" role="tabpanel" aria-labelledby="seo-tags-tab">

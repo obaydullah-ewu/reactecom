@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
-import MasterLayout from "./layouts/admin/MasterLayout";
+// import MasterLayout from "./layouts/admin/MasterLayout";
 import Home from "./components/frontend/Home";
 import Login from "./components/frontend/auth/Login";
 import Register from "./components/frontend/auth/Register";

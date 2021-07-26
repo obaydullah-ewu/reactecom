@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 function Category()
 {
     document.title = "Add Category";
-
     const [categoryInput, setCategory] = useState({
        slug: '',
        name: '',
@@ -23,6 +22,12 @@ function Category()
         setCategory({...categoryInput, [e.target.name]: e.target.value })
     }
 
+    const [allCheckbox,setCheckboxes] = useState([]);
+    const handleCheckbox = (e) => {
+        e.persist();
+        setCheckboxes({ ...allCheckbox, [e.target.name]: e.target.checked });
+    }
+
     const submitCategory = (e) => {
         e.preventDefault();
 
@@ -30,7 +35,7 @@ function Category()
             slug: categoryInput.slug,
             name: categoryInput.name,
             description: categoryInput.descrip,
-            status: categoryInput.status,
+            status: allCheckbox.status ? '1':'0',
             meta_title: categoryInput.meta_title,
             meta_keyword: categoryInput.meta_keyword,
             meta_description: categoryInput.meta_descrip,
@@ -112,7 +117,7 @@ function Category()
                             </div>
                             <div className="form-group mb-3">
                                 <label htmlFor="">Status</label>
-                                <input type="checkbox" name="status" onChange={handleInput} value={categoryInput.status} /> Status 0-show/1-hidden
+                                <input type="checkbox" name="status" onChange={handleCheckbox} defaultChecked={allCheckbox.status === 1 ? true:false} /> Status 0-show/1-hidden
                             </div>
                         </div>
                         <div className="tab-pane card-body border fade" id="seo-tags" role="tabpanel" aria-labelledby="seo-tags-tab">

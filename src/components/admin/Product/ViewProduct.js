@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import {$api_url} from "../../../helpers/env";
 
 function ViewProduct()
 {
@@ -18,23 +19,31 @@ function ViewProduct()
         });
     }, []);
 
-    var display_productData = ""
+    var display_productData = "";
 
     if (loading)
     {
         return <h4>Loading Product list...</h4>
     }else {
-        display_productData =
-        viewProduct.map((item) => {
+        var ProdStatus = '';
+        display_productData = viewProduct.map((item) => {
+            if (item.status == '0')
+            {
+                ProdStatus = 'shown';
+            }else if (item.status == '1')
+            {
+                ProdStatus = 'Hidden'
+            }
             return (
                 <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{item.category.name}</td>
                     <td>{item.name}</td>
                     <td>{item.selling_price}</td>
-                    <td><img src={`http://localhost:8000/${item.image}`} width="100px" alt={item.name}/></td>
+                    <td><img src={`${$api_url}${item.image}`} width="100px" alt={item.name}/></td>
                     <td><Link to={`/admin/edit-product/${item.id}`} className="btn btn-success btn-sm">Edit</Link></td>
-                    <td><button type="button" className="btn btn-danger btn-sm">Delete</button></td>
+                    {/*<td><button type="button" className="btn btn-danger btn-sm">Delete</button></td>*/}
+                    <td>{ProdStatus}</td>
                 </tr>
             )
         });
@@ -58,7 +67,8 @@ function ViewProduct()
                                     <th>Selling Price</th>
                                     <th>Image</th>
                                     <th>Edit</th>
-                                    <th>Delete</th>
+                                    {/*<th>Delete</th>*/}
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>

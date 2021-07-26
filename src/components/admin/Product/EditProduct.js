@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
+import {$api_url} from "../../../helpers/env";
 
-function AddProduct()
+function EditProduct(props)
 {
-    document.title = "Add Product";
-
+    document.title = "Edit Product";
+    const history = useHistory();
+    const [loading, setLoading] = useState(true);
     const [categoryList, setCategoryList] = useState([]);
     const [productInput, setProduct] = useState({
         category_id: '',
@@ -53,10 +55,25 @@ function AddProduct()
                 setCategoryList(res.data.category);
             }
         });
-    }, []);
 
-    const submitProduct = (e) => {
+        const product_id = props.match.params.id;
+        axios.get(`/api/edit-product/${product_id}`).then(res=>{
+            if (res.data.status === 200)
+            {
+                setProduct(res.data.product);
+                setCheckboxes(res.data.product);
+            }else if (res.data.status === 404){
+                swal('Error', res.data.message, 'error');
+                history.push('/admin/view-product');
+            }
+            setLoading(false);
+        })
+
+    }, [props.match.params.id, history]);
+
+    const updateProduct = (e) => {
         e.preventDefault();
+        const product_id = props.match.params.id;
 
         const formData = new FormData();
         formData.append('image', picture.image);
@@ -77,46 +94,36 @@ function AddProduct()
         formData.append('popular', allCheckbox.popular ? '1':'0');
         formData.append('status', allCheckbox.status ? '1':'0');
 
-        axios.post(`/api/store-product`, formData).then(res => {
+        axios.post(`/api/update-product/${product_id}`, formData).then(res=>{
             if (res.data.status === 200)
             {
                 swal("Success", res.data.message, "success");
-                setProduct({...productInput,
-                    category_id: '',
-                    slug: '',
-                    name: '',
-                    description: '',
-
-                    meta_title: '',
-                    meta_keyword: '',
-                    meta_descrip: '',
-
-                    selling_price: '',
-                    original_price: '',
-                    qty: '',
-                    brand: '',
-                    featured: '',
-                    popular: '',
-                    status: '',
-                });
                 setError([]);
             }else if(res.data.status === 422) {
                 swal("All fields are mandatory","","error");
                 setError(res.data.errors);
+            }else if(res.data.status === 404) {
+                swal("Error",res.data.message,"error");
+                history.push('/admin/view-product');
             }
         });
+    }
+
+    if (loading)
+    {
+        return <h4> Edit Product Loading...</h4>
     }
 
     return (
         <div className="container-fluid px-4">
             <div className="card mt-4">
                 <div className="card-header">
-                    <h4>Add Product
+                    <h4>Edit Product
                         <Link to="/admin/view-product" className="btn btn-primary btn-sm float-end">View Product</Link>
                     </h4>
                 </div>
                 <div className="card-body">
-                    <form onSubmit={submitProduct} encType="multipart/form-data">
+                    <form onSubmit={updateProduct} encType="multipart/form-data">
                         <ul className="nav nav-tabs" id="myTab" role="tablist">
                             <li className="nav-item" role="presentation">
                                 <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
@@ -207,6 +214,7 @@ function AddProduct()
                                     <div className="col-md-8 form-group mb-3">
                                         <label>Image</label>
                                         <input type="file" name="image" onChange={handleImage}  className="form-control" />
+                                        <img src={`${$api_url}${productInput.image}`} width="100px" alt=""/>
                                     </div>
                                     <div className="col-md-4 form-group mb-3">
                                         <label>Featured (checked-shown)</label>
@@ -223,7 +231,7 @@ function AddProduct()
                                 </div>
                             </div>
                         </div>
-                        <button className="btn btn-primary px-4">Submit</button>
+                        <button className="btn btn-primary px-4">Update</button>
                     </form>
                 </div>
             </div>
@@ -231,5 +239,4 @@ function AddProduct()
     )
 }
 
-export default AddProduct;
-
+export default EditProduct;
