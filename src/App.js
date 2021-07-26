@@ -2,6 +2,8 @@ import React from "react";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 // import MasterLayout from "./layouts/admin/MasterLayout";
 import Home from "./components/frontend/Home";
+import About from "./components/frontend/About";
+import Contact from "./components/frontend/Contact";
 import Login from "./components/frontend/auth/Login";
 import Register from "./components/frontend/auth/Register";
 import axios from "axios";
@@ -27,6 +29,8 @@ function App() {
       <Router>
         <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/contact" component={Contact} />
             <Route path="/403" component={Page403} />
             <Route path="/404" component={Page404} />
 
