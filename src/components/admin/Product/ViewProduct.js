@@ -27,10 +27,10 @@ function ViewProduct()
     }else {
         var ProdStatus = '';
         display_productData = viewProduct.map((item) => {
-            if (item.status == '0')
+            if (item.status === 0)
             {
                 ProdStatus = 'shown';
-            }else if (item.status == '1')
+            }else if (item.status === 1)
             {
                 ProdStatus = 'Hidden'
             }
