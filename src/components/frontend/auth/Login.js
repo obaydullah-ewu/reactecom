@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import Navbar from "../../../layouts/frontend/Navbar";
 import axios from "axios";
 import swal from "sweetalert";
 import {useHistory} from "react-router-dom";
@@ -44,7 +43,7 @@ function Login() {
     }
     return (
         <div>
-            <Navbar />
+
             <div className="container py-5">
                 <div className="row justify-content-center">
                     <div className="col-md-6">

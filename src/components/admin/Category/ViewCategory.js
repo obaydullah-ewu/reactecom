@@ -4,11 +4,10 @@ import axios from "axios";
 import swal from "sweetalert";
 
 function ViewCategory() {
-    document.title = "View Category";
-
     const [loading, setLoading] = useState(true);
     const [categoryList, setCategoryList] = useState([]);
     useEffect(() => {
+        document.title = "View Category";
         axios.get('/api/view-category').then(res => {
             // console.log(res.data.category)
             if (res.data.status === 200)
