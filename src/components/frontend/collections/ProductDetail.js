@@ -10,7 +10,7 @@ function ProductDetail(props)
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState([]);
 
-    const [] = useState(1);
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
 
@@ -36,6 +36,20 @@ function ProductDetail(props)
         };
     }, [props.match.params.category, props.match.params.product, history]);
 
+    //Start:: Quantity Increment/decrement in Hooks
+    const handleDecrement = () => {
+        if (quantity > 1){
+            setQuantity(prevCount => prevCount - 1 )
+        }
+    }
+    const handleIncrement = () => {
+        if (quantity < 10) {
+            setQuantity(prevCount => prevCount + 1 )
+        }
+    }
+
+    //End:: Quantity Increment/decrement in Hooks
+
     if (loading)
     {
         return <h4>Loading Products Detail...</h4>
@@ -51,7 +65,7 @@ function ProductDetail(props)
                             <div className="col-md-3 mt-3">
                                 <div className="input-group">
                                     <button type="button" onClick={handleDecrement} className="input-group-text">-</button>
-                                    <input type="text" className="form-control text-center" />
+                                    <div className="form-control text-center">{quantity}</div>
                                     <button type="button" onClick={handleIncrement} className="input-group-text">+</button>
                                 </div>
                             </div>
