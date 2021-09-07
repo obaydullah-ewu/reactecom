@@ -7,17 +7,24 @@ function ViewCategory()
     const [loading, setLoading] = useState(true);
     const [category, setCategory] = useState([]);
     useEffect(()=> {
-        document.title = "Collections";
+        document.title = "Categories";
+        let isMounted = true;
         axios.get('/api/getCategory').then( res=> {
-           if (res.data.status === 200)
-           {
-               console.log(res.data.categories)
-               setCategory(res.data.categories);
-           }
-           setLoading(false)
-
+            if (isMounted)
+            {
+                if (res.data.status === 200)
+                {
+                    // console.log(res.data.categories)
+                    setCategory(res.data.categories);
+                    setLoading(false);
+                }
+            }
         });
+        return () => {
+            isMounted = false;
+        }
     }, []);
+
     var showCategoryList = "";
     if (loading)
     {
