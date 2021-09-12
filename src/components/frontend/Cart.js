@@ -103,30 +103,30 @@ function Cart()
                     </tr>
                     </thead>
                     <tbody>
-                    {cart.map((item, idx) => {
-                        totalCartPrice += item.product.selling_price * item.product_qty;
-                        return (
-                            <tr key={idx}>
-                                <td width="10%">
-                                    <img src={`${$api_url}${item.product.image}`} alt={`${item.product.name}`} width="50px" height="50px"/>
-                                </td>
-                                <td>{item.product.name}</td>
-                                <td width="15%">{item.product.selling_price}</td>
-                                <td width="15%">
-                                    <div className="input-group">
-                                        <button type="button" onClick={() => handleDecrement(item.id)} className="input-group-text">-</button>
-                                        <div className="form-control text-center">{item.product_qty}</div>
-                                        <button type="button" onClick={() => handleIncrement(item.id)} className="input-group-text">+</button>
-                                    </div>
-                                </td>
-                                <td width="15%"
-                                    className="text-center">{item.product.selling_price * item.product_qty}</td>
-                                <td width="10%" className="text-center">
-                                    <button type="button" onClick={ (e) => deleteCartItem(e, item.id) } className="btn btn-danger btn-sm">Remove</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
+                        {cart.map((item, idx) => {
+                            totalCartPrice += item.product.selling_price * item.product_qty;
+                            return (
+                                <tr key={idx}>
+                                    <td width="10%">
+                                        <img src={`${$api_url}${item.product.image}`} alt={`${item.product.name}`} width="50px" height="50px"/>
+                                    </td>
+                                    <td>{item.product.name}</td>
+                                    <td width="15%">{item.product.selling_price}</td>
+                                    <td width="15%">
+                                        <div className="input-group">
+                                            <button type="button" onClick={() => handleDecrement(item.id)} className="input-group-text">-</button>
+                                            <div className="form-control text-center">{item.product_qty}</div>
+                                            <button type="button" onClick={() => handleIncrement(item.id)} className="input-group-text">+</button>
+                                        </div>
+                                    </td>
+                                    <td width="15%"
+                                        className="text-center">{item.product.selling_price * item.product_qty}</td>
+                                    <td width="10%" className="text-center">
+                                        <button type="button" onClick={ (e) => deleteCartItem(e, item.id) } className="btn btn-danger btn-sm">Remove</button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
