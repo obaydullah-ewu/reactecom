@@ -146,7 +146,6 @@ function Cart()
                     <h6>Home / Cart</h6>
                 </div>
             </div>
-
             <div className="py-4">
                 <div className="container">
                     <div className="row">
