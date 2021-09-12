@@ -50,12 +50,34 @@ function ProductDetail(props)
 
     //End:: Quantity Increment/decrement in Hooks
 
+    const submitAddToCart = (e) => {
+        e.preventDefault();
+
+        const data = {
+            product_id: product.id,
+            product_qty: quantity
+        }
+
+        axios.post(`/api/add-to-cart`, data).then(res=> {
+            if (res.data.status === 200){
+                swal("Success", res.data.message, "success");
+            } else if (res.data.status === 409){
+                // Already added to cart
+                swal("Warning", res.data.message, "warning");
+            } else if (res.data.message === 401) {
+                swal("Error", res.data.message, "error");
+            }else if (res.data.message === 404) {
+                swal("Warning", res.data.message, "warning");
+            }
+        });
+    }
+
     if (loading)
     {
         return <h4>Loading Products Detail...</h4>
     } else {
         var avail_stock = '';
-        if (product.qty > 0){
+        if (product.qty > 0){a
             avail_stock =
                 <div>
                     <div>
@@ -70,7 +92,7 @@ function ProductDetail(props)
                                 </div>
                             </div>
                             <div className="col-md-3 mt-3">
-                                <button type="button" className="btn btn-primary w-100">Add to Cart</button>
+                                <button type="button" className="btn btn-primary w-100" onClick={submitAddToCart}>Add to Cart</button>
                             </div>
                         </div>
                     </div>

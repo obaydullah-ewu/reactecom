@@ -55,7 +55,7 @@ function ViewProduct(props)
                     <div className="col-md-3" key={idx}>
                         <div className="card">
                             <Link to={`/collections/${item.category.slug}/${item.slug}`}>
-                                <img src={`${$api_url}${item.image}`} className="w-100" alt="{ item.name }" />
+                                <img src={`${$api_url}${item.image}`} className="w-100" alt={ item.name } />
                             </Link>
                             <div className="card-body">
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`}>
