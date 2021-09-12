@@ -77,7 +77,7 @@ function ProductDetail(props)
         return <h4>Loading Products Detail...</h4>
     } else {
         var avail_stock = '';
-        if (product.qty > 0){a
+        if (product.qty > 0){
             avail_stock =
                 <div>
                     <div>
@@ -117,7 +117,7 @@ function ProductDetail(props)
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4 border-end">
-                            <img src={`${$api_url}${product.image}`} alt="Product Image" className="w-100"/>
+                            <img src={`${$api_url}${product.image}`} alt={ product.name } className="w-100"/>
                         </div>
                         <div className="col-md-8">
                             <h4>
