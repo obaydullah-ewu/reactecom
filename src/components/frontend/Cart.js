@@ -37,7 +37,7 @@ function Cart()
         return () => {
             isMounted = false
         };
-    }, [history]);
+    }, []);
 
     const handleDecrement = (cart_id) => {
         setCart(cart =>
@@ -73,8 +73,9 @@ function Cart()
         axios.delete(`/api/delete-cartItem/${cart_id}`).then(res=> {
             if (res.data.status === 200)
             {
+                setCart(res.data.cart);
                 swal("Success", res.data.message, "success");
-                thisClicked.closest("tr").remove();
+                // thisClicked.closest("tr").remove();
             } else if (res.data.status === 404){
                 swal("Error", res.data.message, "error");
                 thisClicked.innerText = "Remove";
@@ -130,6 +131,7 @@ function Cart()
                     </tbody>
                 </table>
             </div>
+
         } else {
             cart_HTML = <div>
                 <div className="card card-body py-5 text-center shadow-sm">
