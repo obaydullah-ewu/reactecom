@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import axios from "axios";
 import swal from "sweetalert";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 function Category()
 {
     document.title = "Add Category";
+    const history = useHistory();
     const [categoryInput, setCategory] = useState({
        slug: '',
        name: '',
@@ -55,6 +56,8 @@ function Category()
                     meta_descrip: '',
                     error_list: [],
                 });
+                history.push('/admin/view-category');
+                console.log('in');
             }else if (res.data.status === 400){
                 setCategory({...categoryInput, error_list:res.data.errors})
             }

@@ -56,6 +56,7 @@ function EditCategory(props)
             {
                 swal("Success", res.data.message, "success");
                 setError([]);
+                history.push('/admin/view-category');
             }
             else if (res.data.status === 422)
             {

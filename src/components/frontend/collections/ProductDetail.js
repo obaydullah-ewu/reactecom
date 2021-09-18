@@ -59,8 +59,8 @@ function ProductDetail(props) {
         }
 
         ApiMethods.postFunction(ApiRoute.ADD_TO_CART, data).then(res => {
-            // swal("Success", res.message, "success").then(() => {
-            // })
+            swal("Success", res.message, "success").then(() => {
+            })
         })
 
         // axios.post(`/api/add-to-cart`, data).then(res=> {

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 
 function AddProduct()
 {
     document.title = "Add Product";
+    const history = useHistory();
 
     const [categoryList, setCategoryList] = useState([]);
     const [productInput, setProduct] = useState({
@@ -100,6 +101,7 @@ function AddProduct()
                     status: '',
                 });
                 setError([]);
+                history.push('/admin/view-product');
             }else if(res.data.status === 422) {
                 swal("All fields are mandatory","","error");
                 setError(res.data.errors);

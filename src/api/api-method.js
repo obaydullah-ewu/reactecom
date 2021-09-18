@@ -10,6 +10,11 @@ export class ApiMethods {
                 }
             })
             .then(res => {
+                if (res.status === 201){
+                    swal("Warning", res.message, "warning").then(() => {
+                    })
+                    return res.data
+                }
                 if (res.status === 200) {
                     return res.data
                 } else {

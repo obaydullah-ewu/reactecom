@@ -35,6 +35,11 @@ function ViewCategory() {
                 thisClicked.innerText = "Delete"
 
             }
+            else if(res.data.status === 401)
+            {
+                swal("Error", res.data.message, 'error');
+                thisClicked.innerText = "Delete"
+            }
         })
     }
 
